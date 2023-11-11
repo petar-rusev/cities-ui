@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="createCityDialog" 
+            title="Add City"
+            titleAlignment="Center"
+            class="sapUiContentPadding">
+        <content>
+            <VBox>
+                <Label text="Name" />
+                <Input id="nameInput" placeholder="Enter name..." />
+
+                <Label text="Area" />
+                <Input id="areaInput" placeholder="Enter area..." type="Number"/>
+
+                <Label text="Population" />
+                <Input id="populationInput" placeholder="Enter population..." type="Number"/>
+            </VBox>
+        </content>
+        <buttons>
+            <Button text="Submit" press="handleSubmitCityButtonPressed" type="Ghost" />
+            <Button text="Cancel" press="handleCloseCreateCityDialog" type="Reject"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

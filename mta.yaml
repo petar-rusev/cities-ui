@@ -1,0 +1,92 @@
+_schema-version: "3.2"
+ID: cities-ui
+version: 0.0.1
+modules:
+- name: cities-ui-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: cities-ui-destination-service
+    parameters:
+      content-target: true
+  - name: cities-ui_html_repo_host
+    parameters:
+      service-key:
+        name: cities-ui_html_repo_host-key
+  - name: uaa_cities-ui
+    parameters:
+      service-key:
+        name: uaa_cities-ui-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: cities_ui_cities_ui_html_repo_host
+          ServiceInstanceName: cities-ui-html5-app-host-service
+          ServiceKeyName: cities-ui_html_repo_host-key
+          sap.cloud.service: cities-ui
+        - Authentication: OAuth2UserTokenExchange
+          Name: cities_ui_uaa_cities_ui
+          ServiceInstanceName: cities-ui-xsuaa-service
+          ServiceKeyName: uaa_cities-ui-key
+          sap.cloud.service: cities-ui
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: cities-ui-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: cities-ui_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comsapcitiesapp.zip
+      name: comsapcitiesapp
+      target-path: resources/
+- name: comsapcitiesapp
+  type: html5
+  path: cities-app
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: cities-ui-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: cities-ui-destination-service
+    service-plan: lite
+- name: cities-ui_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: cities-ui-html5-app-host-service
+    service-plan: app-host
+- name: uaa_cities-ui
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: cities-ui-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo

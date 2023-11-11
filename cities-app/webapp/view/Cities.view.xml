@@ -1,0 +1,65 @@
+<mvc:View controllerName="com.sap.citiesapp.controller.Cities"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns:ui="sap.ui.table"
+	xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+	xmlns:tnt="sap.tnt"
+	>
+    <Page id="page" title="{i18n>title}">
+		<dependents>
+			<core:Fragment fragmentName="com.sap.citiesapp.fragment.ColumnMenu" type="XML"/>
+			<core:Fragment fragmentName="com.sap.citiesapp.fragment.CreateCityDialog" type="XML" />
+			<core:Fragment fragmentName="com.sap.citiesapp.fragment.SortDialog" type="XML"/>
+		</dependents>
+		<ui:Table 	id="idProductsTable"
+				rows="{ path: 'cities>/data' }"
+				alternateRowColors="true"
+				>
+			<ui:extension>
+				<OverflowToolbar id="_IDGenOverflowToolbar1">
+					<Title id="tableTitle" text="Cities Data" level="H2"/>
+					<ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+					<tnt:InfoLabel class="sapUiTinyMargin" id="il1" text="{cities>/filter}" renderMode="Narrow" colorScheme="6"/>
+					<tnt:InfoLabel class="sapUiTinyMargin" id="il2" text="{cities>/sorter}" renderMode="Narrow" colorScheme="7"/>
+					<SearchField id="searchByName" search="handleSearch" placeholder="Filter By Name Contains" width="17.5rem"/>
+					<OverflowToolbarButton tooltip="Add" text="Add City" press="handleOpenCreateCityDialog" icon="sap-icon://add"/>
+					<Button
+						id="sortButton"
+                        tooltip="Sort"
+						icon="sap-icon://sort"
+						press="handleSortButtonPressed"/>
+
+				</OverflowToolbar>
+			</ui:extension>
+			<ui:rowSettingsTemplate>
+					<ui:RowSettings highlight="{ path: 'cities>population', formatter:'.formatter.formatRowHighlight' }"/>
+			</ui:rowSettingsTemplate>
+			<ui:columns>
+				<ui:Column>
+					<Label text="Name"/>
+					<ui:template>
+						<Text text="{cities>name}" wrapping="false"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column>
+					<Label text="Area"/>
+					<ui:template>
+						<Text text="{cities>area}" wrapping="false"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column>
+					<Label text="Population"/>
+					<ui:template>
+						<Text text="{cities>population}" wrapping="false"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column>
+					<Label text="Density"/>
+					<ui:template>
+						<Text text="{cities>density}" wrapping="false"/>
+					</ui:template>
+				</ui:Column>
+			</ui:columns>
+		</ui:Table>
+    </Page>
+</mvc:View>
