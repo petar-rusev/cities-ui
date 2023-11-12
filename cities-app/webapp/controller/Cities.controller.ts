@@ -10,6 +10,8 @@ import CityDataParams from "../helper/CityDataParams";
 import formatter from "../formatter/formatter";
 import { ComparisonOperator } from "../enums/ComparisonOperator";
 import { SortOrder } from "../enums/SortOrder";
+import City from "../helper/City";
+import SearchField from "sap/m/SearchField";
 
 export default class Cities extends Controller {
     public formatter = formatter;
@@ -30,7 +32,7 @@ export default class Cities extends Controller {
      */
     private fetchCities(): void {
         CityService.getInstance().getCities()
-            .then(cities => this.getView().getModel("cities").setProperty("/data", cities))
+            .then(cities => this.getModel('cities').setProperty("/data", cities))
             .catch(() => MessageToast.show("Error initializing city data."));
     }
 
@@ -40,7 +42,7 @@ export default class Cities extends Controller {
      * @returns The requested JSONModel instance.
      */
     private getModel(sName?: string): JSONModel {
-        return this.getView().getModel(sName) as JSONModel;
+        return this.getView()?.getModel(sName) as JSONModel;
     }
 
     /**
@@ -101,8 +103,8 @@ export default class Cities extends Controller {
 
         return {
             name: nameInput.getValue(),
-            area: areaInput.getValue(),
-            population: populationInput.getValue()
+            area: parseFloat(areaInput.getValue()),
+            population: parseInt(populationInput.getValue())
         };
     }
 
@@ -119,7 +121,7 @@ export default class Cities extends Controller {
      * @param oEvent - The event object containing sort dialog confirmation details.
      */
     public handleSortDialogConfirm(oEvent: Event): void {
-        const mParams = oEvent.getParameters();
+        const mParams = oEvent.getParameters() as SortParameters;
         this._currentSort = {
             sortBy: mParams.sortItem.getKey(),
             order: mParams.sortDescending ? SortOrder.DESCENDING : SortOrder.ASCENDING
@@ -134,7 +136,8 @@ export default class Cities extends Controller {
      * @param oEvent - The event object containing the search query.
      */
     public handleSearch(oEvent: Event): void {
-        const nameChunk = oEvent.getParameters().query;
+        const searchField = oEvent.getSource() as SearchField;
+        const nameChunk = searchField.getValue()
         this._currentSearch = nameChunk ? 
             { filterProperty: "name", filterOperator: ComparisonOperator.CONTAINS, filterValue: nameChunk } :
             {};
