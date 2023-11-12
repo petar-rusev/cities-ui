@@ -8,6 +8,8 @@ import Dialog from "sap/m/Dialog";
 import CityService from "../service/CityService";
 import CityDataParams from "../helper/CityDataParams";
 import formatter from "../formatter/formatter";
+import { ComparisonOperator } from "../enums/ComparisonOperator";
+import { SortOrder } from "../enums/SortOrder";
 
 export default class Cities extends Controller {
     public formatter = formatter;
@@ -120,7 +122,7 @@ export default class Cities extends Controller {
         const mParams = oEvent.getParameters();
         this._currentSort = {
             sortBy: mParams.sortItem.getKey(),
-            order: mParams.sortDescending ? 'DESC' : 'ASC'
+            order: mParams.sortDescending ? SortOrder.DESCENDING : SortOrder.ASCENDING
         };
         this.getModel("cities").setProperty("/sorter", `Sorted by '${this._currentSort.sortBy}' ${this._currentSort.order}`);
         this.updateCitiesData();
@@ -134,7 +136,7 @@ export default class Cities extends Controller {
     public handleSearch(oEvent: Event): void {
         const nameChunk = oEvent.getParameters().query;
         this._currentSearch = nameChunk ? 
-            { filterProperty: "name", filterOperator: "Contains", filterValue: nameChunk } :
+            { filterProperty: "name", filterOperator: ComparisonOperator.CONTAINS, filterValue: nameChunk } :
             {};
 
         this.updateCitiesData();

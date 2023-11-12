@@ -20,5 +20,5 @@ export default interface City {
     /**
      * The population density of the city per square kilometer.
      */
-    density: number;
+    density?: number;
 }

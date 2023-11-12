@@ -1,36 +1,42 @@
-## Application Details
-|               |
-| ------------- |
-|**Generation Date and Time**<br>Fri Nov 10 2023 02:16:44 GMT+0000 (Coordinated Universal Time)|
-|**App Generator**<br>@sap/generator-fiori-freestyle|
-|**App Generator Version**<br>1.11.4|
-|**Generation Platform**<br>SAP Business Application Studio|
-|**Template Used**<br>simple|
-|**Service Type**<br>None|
-|**Service URL**<br>N/A
-|**Module Name**<br>cities-app|
-|**Application Title**<br>Cities Data|
-|**Namespace**<br>com.sap|
-|**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.120.1|
-|**Enable Code Assist Libraries**<br>True|
-|**Enable TypeScript**<br>True|
-|**Add Eslint configuration**<br>True, see https://www.npmjs.com/package/eslint-plugin-fiori-custom for the eslint rules.|
+# Cities UI
 
-## cities-app
+## Overview
+Cities UI is a web application designed to manage and display information about various cities. It allows users to view, sort, and filter cities based on different criteria such as population, area, and density.
 
-A Fiori application.
+## Features
+- **View Cities**: Display a list of cities along with relevant details.
+- **Sorting**: Sort cities based on population, area, or other criteria.
+- **Filtering**: Filter cities based on specific conditions.
+- **Responsive Design**: Adapt to different screen sizes for optimal viewing experience.
 
-### Starting the generated app
+## Technology Stack
+- **SAP UI5**: Leveraged for building the user interface.
+- **TypeScript**: Used for writing application logic.
+- **JSONModel**: Utilized for handling data models in the application.
 
--   This app has been generated using the SAP Fiori tools - App Generator, as part of the SAP Fiori tools suite.  In order to launch the generated app, simply run the following from the generated app root folder:
+## Prerequisites
+Before setting up the project, ensure you have the following installed:
+- Node.js LTS version
+- npm (Node Package Manager)
+- Git
 
-```
-    npm start
-```
+## Installation
+To set up the project on your local machine:
 
-#### Pre-requisites:
+1. Clone the repository:
 
-1. Active NodeJS LTS (Long Term Support) version and associated supported NPM version.  (See https://nodejs.org)
+   ```sh
+   git clone https://github.com/petar-rusev/cities-ui.git
 
+2. cd cities-ui
+
+3. npm install
+
+## Running the Application
+To run the application locally:
+
+```sh
+npm start
+
+This will start a local development server. Open your browser and navigate to http://localhost:3000 to view the application.
 

@@ -27,6 +27,16 @@ export default class CityService {
             });
     }
 
+    public async createCity(city:City){
+        return fetch(AppSettings.BASE_API_PATH, {
+            method: 'POST',
+            body: JSON.stringify(city),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+    }
+
     /**
      * Generates the URI for the API call with query parameters for filtering and sorting.
      * @param params - An object of type CityDataUpdateParams.
