@@ -4,13 +4,16 @@ import City from "../helper/City";
 
 export default class CityService {
     private static instance: CityService;
+    private serviceUrl: string;
 
-    public static getInstance(): CityService {
-        this.instance ??= new CityService();
+    public static getInstance(serviceUrl: string): CityService {
+        this.instance ??= new CityService(serviceUrl);
         return this.instance;
     }
 
-    private constructor() {}
+    private constructor(serviceUrl: string) {
+        this.serviceUrl = serviceUrl;
+    }
 
     /**
      * Fetches a list of cities with optional filtering and sorting parameters.
@@ -28,7 +31,7 @@ export default class CityService {
     }
 
     public async createCity(city:City){
-        return fetch(AppSettings.BASE_API_PATH, {
+        return fetch(this.serviceUrl, {
             method: 'POST',
             body: JSON.stringify(city),
             headers: {
@@ -52,6 +55,6 @@ export default class CityService {
         
         const queryParts = [filterQuery, sortQuery].filter(part => part.length > 0);
         const query = queryParts.join('&');
-        return `${AppSettings.BASE_API_PATH}?${query}`;
+        return `${this.serviceUrl}?${query}`;
     }
 }

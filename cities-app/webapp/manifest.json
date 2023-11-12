@@ -14,7 +14,15 @@
             "id": "@sap/generator-fiori:basic",
             "version": "1.11.4",
             "toolsId": "d6e9441e-7083-4fac-b3c5-3519ecc3a239"
-        }
+        },
+        "dataSources": {
+            "apiService": {
+              "uri": {
+                "local": "http://localhost:8080/api/v1/cities",
+                "cloud": "https://cities-service.cfapps.us10-001.hana.ondemand.com/api/v1/cities"
+              }
+            }
+          }
     },
     "sap.ui": {
         "technology": "UI5",

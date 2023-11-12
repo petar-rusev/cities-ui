@@ -12,17 +12,23 @@ import { ComparisonOperator } from "../enums/ComparisonOperator";
 import { SortOrder } from "../enums/SortOrder";
 import City from "../helper/City";
 import SearchField from "sap/m/SearchField";
+import { AppSettings } from "../util/AppSettings";
+import { ApiServiceConfig } from "../helper/ApiServiceConfig";
 
 export default class Cities extends Controller {
     public formatter = formatter;
     
     private _currentSearch: CityDataParams = {};
     private _currentSort: CityDataParams = {};
+    private _citiesService: CityService
 
     /**
      * Called when the controller is instantiated. Initializes the controller and fetches initial city data.
      */
     public onInit(): void {
+        const appConfig: ApiServiceConfig = this.getOwnerComponent()?.getManifestEntry("sap.app").dataSources.apiService.uri;
+        const appSettings = new AppSettings(appConfig);
+        this._citiesService = CityService.getInstance(appSettings.getServiceUrl());
         this.fetchCities();
     }
 
@@ -31,7 +37,7 @@ export default class Cities extends Controller {
      * Handles any errors that occur during fetching and displays a message toast.
      */
     private fetchCities(): void {
-        CityService.getInstance().getCities()
+        this._citiesService.getCities()
             .then(cities => this.getModel('cities').setProperty("/data", cities))
             .catch(() => MessageToast.show("Error initializing city data."));
     }
@@ -51,7 +57,7 @@ export default class Cities extends Controller {
      */
     private updateCitiesData(): void {
         const params = { ...this._currentSearch, ...this._currentSort };
-        CityService.getInstance().getCities(params)
+        this._citiesService.getCities(params)
             .then(cities => this.getModel('cities').setProperty('/data', cities))
             .catch(() => MessageToast.show("Error updating city data."));
     }
@@ -86,7 +92,7 @@ export default class Cities extends Controller {
      */
     public handleSubmitCityButtonPressed(): void {
         const city = this.getCityFromInputFields();
-        CityService.getInstance().createCity(city)
+        this._citiesService.createCity(city)
             .then(() => MessageToast.show('City Created Successfully.'))
             .catch(() => MessageToast.show('Error creating city.'));
         this.handleCloseCreateCityDialog();
