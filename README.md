@@ -24,6 +24,8 @@ Cities UI is deployed on SAP BTP Cloud Foundry within a trial account as an HTML
 - **📜 TypeScript**: Clear and maintainable application logic.
 - **🐳 Docker**: Streamlined local development.
 - **🔗 Docker Compose**: Connects service and UI applications for local development.
+- **☁️ SAP BTP (Business Technology Platform)**: Enables integration and extension of applications in the cloud.
+- **🖥️ SAP Business Application Studio**: Advanced development environment for efficient coding.
 
 ## 📚 Prerequisites
 Before starting, ensure you have these installed (links to installation guides provided):
