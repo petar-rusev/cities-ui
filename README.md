@@ -1,42 +1,78 @@
-# Cities UI
+# 🌍 Cities UI: Your Urban Data Dashboard
 
 ## Overview
-Cities UI is a web application designed to manage and display information about various cities. It allows users to view, sort, and filter cities based on different criteria such as population, area, and density.
+Welcome to Cities UI! This web application makes it easy to explore city data. You can view, sort, and filter information about different cities, such as their population, area, and more.
 
-## Features
-- **View Cities**: Display a list of cities along with relevant details.
-- **Sorting**: Sort cities based on population, area, or other criteria.
-- **Filtering**: Filter cities based on specific conditions.
-- **Responsive Design**: Adapt to different screen sizes for optimal viewing experience.
+## ⚙️ Key Features
+- **🏙 City Viewer**: Detailed listings of cities with important information.
+- **🔀 Data Sorting**: Sort city data by various metrics like name, population, area, and density.
+- **🔍 Advanced Filtering**: Use filters to find specific city data by city name.
+- **💻 Responsive UI**: A smooth experience on any device.
 
-## Technology Stack
-- **SAP UI5**: Leveraged for building the user interface.
-- **TypeScript**: Used for writing application logic.
-- **JSONModel**: Utilized for handling data models in the application.
+## 🛠 Technology Stack
+- **🌐 SAP UI5**: For a robust and scalable user interface.
+- **📜 TypeScript**: Clear and maintainable application logic.
+- **🐳 Docker**: Streamlined local development.
+- **🔗 Docker Compose**: Connects service and UI applications for local development.
 
-## Prerequisites
-Before setting up the project, ensure you have the following installed:
-- Node.js LTS version
-- npm (Node Package Manager)
-- Git
+## 📚 Prerequisites
+Before starting, ensure you have these installed (links to installation guides provided):
+- [Node.js (version 18.12.0 or higher)](https://nodejs.org/en/download/)
+- [npm (Node Package Manager)](https://www.npmjs.com/get-npm)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Installation
-To set up the project on your local machine:
+## 🚀 Installation Guide
+Set up the project on your machine:
 
-1. Clone the repository:
-
+1. **Clone the Cities UI Repository**:
    ```sh
    git clone https://github.com/petar-rusev/cities-ui.git
 
-2. cd cities-ui
+2. **Enter the Project Directory**
+```sh
+cd cities-ui
+```
 
-3. npm install
+3. **Install Dependencies**
+```sh
+npm install
+```
 
-## Running the Application
-To run the application locally:
+## 🏃‍♂️ Start Application Locally
 
+### Option 1: Using Docker-Compose
+
+1. **Navigate to the cities-app directory:**
+```sh
+cd cities-app
+```
+
+2. **Launch the Application:**
+```sh
+docker-compose up
+```
+### This starts the [cities-service spring boot application](https://github.com/petar-rusev/cities-service) and the cities-app SAP UI5 application
+
+## Option 2: Manually Starting the cities-service and cities-app
+
+1. **Clone and Start cities-service:**
+### Clone the cities-service repository and follow the instructions in its README to start the service locally.
+
+2. Start the Cities UI APP
+### Navigate to the cities-app directory withing the cities-ui project:
+```sh
+cd cities-app
+```
+### Start the application 
 ```sh
 npm start
+```
+This will spin up the cities-app on http://localhost:8080
 
-This will start a local development server. Open your browser and navigate to http://localhost:3000 to view the application.
+
+
+
+
 
