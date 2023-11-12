@@ -14,6 +14,8 @@
 		<ui:Table 	id="idProductsTable"
 				rows="{ path: 'cities>/data' }"
 				alternateRowColors="true"
+				enableBusyIndicator="true"
+				rowMode="Interactive"
 				>
 			<ui:extension>
 				<OverflowToolbar id="_IDGenOverflowToolbar1">
