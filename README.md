@@ -65,7 +65,7 @@ cd cities-app
 ```sh
 docker-compose up
 ```
-### This starts the [cities-service spring boot application](https://github.com/petar-rusev/cities-service) and the cities-app SAP UI5 application
+### This starts the [cities-service spring boot application](https://github.com/petar-rusev/cities-service) on http://localhost:8080 and the cities-app SAP UI5 application on http://localhost:8081
 
 ## Option 2: Manually Starting the cities-service and cities-app
 
@@ -73,7 +73,7 @@ docker-compose up
 ### Clone the cities-service repository and follow the instructions in its README to start the service locally.
 
 2. Start the Cities UI APP
-### Navigate to the cities-app directory withing the cities-ui project:
+### Navigate to the cities-app directory within the cities-ui project:
 ```sh
 cd cities-app
 ```
