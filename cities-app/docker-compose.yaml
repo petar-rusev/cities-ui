@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  cities-app:
+    image: petarrusev/cities-app:latest
+    ports:
+      - 8081:80 
+    depends_on:
+      - cities-service # Ensures cities-service starts first
+
+  cities-service:
+    image: petarrusev/cities-service:latest
+    ports:
+      - "8080:8080" # Map port 8080 of the container to port 8080 on the host
