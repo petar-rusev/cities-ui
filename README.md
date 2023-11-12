@@ -3,6 +3,16 @@
 ## Overview
 Welcome to Cities UI! This web application makes it easy to explore city data. You can view, sort, and filter information about different cities, such as their population, area, and more.
 
+
+## Application Availability
+Cities UI is deployed on SAP BTP Cloud Foundry within a trial account as an HTML5 application. You can access the application [here](https://5de14ff7trial.launchpad.cfapps.us10.hana.ondemand.com/cd77f5a1-f517-44e2-8f19-82134f299a9d.cities-ui.comsapcitiesapp-0.0.1/index.html). Please note that in the trial account, applications are periodically stopped. To gain access as a member of the subaccount or to request the application to be started on demand, please contact me
+
+## Contact Information
+
+- **Petar Rusev**
+- Email: [petar.rusev.87@gmail.com](mailto:petar.rusev.87@gmail.com)
+
+
 ## ⚙️ Key Features
 - **🏙 City Viewer**: Detailed listings of cities with important information.
 - **🔀 Data Sorting**: Sort city data by various metrics like name, population, area, and density.
