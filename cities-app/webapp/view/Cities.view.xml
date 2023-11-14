@@ -2,8 +2,9 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
 	xmlns:ui="sap.ui.table"
 	xmlns:core="sap.ui.core"
-    xmlns="sap.m"
+	xmlns:commons="sap.suite.ui.commons"
 	xmlns:tnt="sap.tnt"
+	xmlns="sap.m"
 	>
     <Page id="page" title="{i18n>title}">
 		<dependents>
@@ -11,57 +12,82 @@
 			<core:Fragment fragmentName="com.sap.citiesapp.fragment.CreateCityDialog" type="XML" />
 			<core:Fragment fragmentName="com.sap.citiesapp.fragment.SortDialog" type="XML"/>
 		</dependents>
-		<ui:Table 	id="idProductsTable"
+		<subHeader>
+			<OverflowToolbar>
+				<Title wrapping="true" text="Advanced Cities Filter: "/>
+				<tnt:InfoLabel class="sapUiTinyMargin" id="il1" text="{cities>/filter}" renderMode="Narrow" colorScheme="6"/>
+				<tnt:InfoLabel class="sapUiTinyMargin" id="il2" text="{cities>/sorter}" renderMode="Narrow" colorScheme="7"/>
+			</OverflowToolbar>
+		</subHeader>
+		<content>
+			<ui:Table 	id="idProductsTable"
 				rows="{ path: 'cities>/data' }"
 				alternateRowColors="true"
 				enableBusyIndicator="true"
 				rowMode="Interactive"
 				>
 			<ui:extension>
-				<OverflowToolbar id="_IDGenOverflowToolbar1">
-					<Title id="tableTitle" text="Cities Data" level="H2"/>
-					<ToolbarSpacer id="_IDGenToolbarSpacer1"/>
-					<tnt:InfoLabel class="sapUiTinyMargin" id="il1" text="{cities>/filter}" renderMode="Narrow" colorScheme="6"/>
-					<tnt:InfoLabel class="sapUiTinyMargin" id="il2" text="{cities>/sorter}" renderMode="Narrow" colorScheme="7"/>
-					<SearchField id="searchByName" search="handleSearch" placeholder="Filter By Name Contains" width="17.5rem"/>
-					<OverflowToolbarButton tooltip="Add" text="Add City" press="handleOpenCreateCityDialog" icon="sap-icon://add"/>
-					<Button
-						id="sortButton"
-                        tooltip="Sort"
-						icon="sap-icon://sort"
-						press="handleSortButtonPressed"/>
-
+				<OverflowToolbar>
+				<Select id="filterProperty" selectedKey="name" tooltip="Layout Types" change="handleFilterPropertyChange">
+					<core:Item key="name" text="City Name" />
+					<core:Item key="area" text="City Area" />
+					<core:Item key="population" text="City Population" />
+					<core:Item key="density" text="City Density" />
+				</Select>
+				<content>
+					<SegmentedButton id="filterOperationSelect" selectedKey="-" selectionChange="handleFilterOperationSelect">
+						<items>
+							<SegmentedButtonItem id="containsOperation" text="-" key="-" width="4em" tooltip="Contains"/>
+							<SegmentedButtonItem id="eqOperation" text="==" key=":" width="4em" tooltip="Equals"/>
+							<SegmentedButtonItem id="gtOperation" text="&gt;" key="gt" width="4em" tooltip="Greater Than"/>
+							<SegmentedButtonItem id="ltOperation" text="&lt;" key="lt" width="4em" tooltip="Less Than"/>
+							<SegmentedButtonItem id="lteOperation" text="&lt;=" key="lte" width="4em" tooltip = "Less Than Or Equals"/>
+							<SegmentedButtonItem id="gteOperation" text="&gt;=" key="gte" width="4em" tooltip="Greater Than Or Equals"/>
+						</items>
+					</SegmentedButton>
+					<Input id="filterValue" type="Text" placeholder="Enter text" width="10em"/>
+				</content>
+				<ToggleButton text="Apply filter" press="handleApplyFilter"/>
+				<ToolbarSpacer/>
+				<SearchField id="searchByName" search="handleSearch" placeholder="Filter By Name Contains" width="17.5rem"/>
+				<OverflowToolbarButton tooltip="Add" text="Add City" press="handleOpenCreateCityDialog" icon="sap-icon://add"/>
+				<Button
+					id="sortButton"
+					tooltip="Sort"
+					icon="sap-icon://sort"
+					press="handleSortButtonPressed"/>
 				</OverflowToolbar>
 			</ui:extension>
 			<ui:rowSettingsTemplate>
 					<ui:RowSettings highlight="{ path: 'cities>population', formatter:'.formatter.formatRowHighlight' }"/>
 			</ui:rowSettingsTemplate>
 			<ui:columns>
-				<ui:Column>
-					<Label text="Name"/>
-					<ui:template>
-						<Text text="{cities>name}" wrapping="false"/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column>
-					<Label text="Area"/>
-					<ui:template>
-						<Text text="{cities>area}" wrapping="false"/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column>
-					<Label text="Population"/>
-					<ui:template>
-						<Text text="{cities>population}" wrapping="false"/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column>
-					<Label text="Density"/>
-					<ui:template>
-						<Text text="{cities>density}" wrapping="false"/>
-					</ui:template>
-				</ui:Column>
-			</ui:columns>
-		</ui:Table>
+					<ui:Column>
+						<Label text="Name"/>
+						<ui:template>
+							<Text text="{cities>name}" wrapping="false"/>
+						</ui:template>
+					</ui:Column>
+					<ui:Column>
+						<Label text="Area"/>
+						<ui:template>
+							<Text text="{cities>area}" wrapping="false"/>
+						</ui:template>
+					</ui:Column>
+					<ui:Column>
+						<Label text="Population"/>
+						<ui:template>
+							<Text text="{cities>population}" wrapping="false"/>
+						</ui:template>
+					</ui:Column>
+					<ui:Column>
+						<Label text="Density"/>
+						<ui:template>
+							<Text text="{cities>density}" wrapping="false"/>
+						</ui:template>
+					</ui:Column>
+				</ui:columns>
+			</ui:Table>
+		</content>
     </Page>
 </mvc:View>

@@ -1,4 +1,3 @@
-import Controller from "sap/ui/core/mvc/Controller";
 import Event from "sap/ui/base/Event";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import MessageToast from "sap/m/MessageToast";
@@ -14,13 +13,12 @@ import City from "../helper/City";
 import SearchField from "sap/m/SearchField";
 import { AppSettings } from "../util/AppSettings";
 import { ApiServiceConfig } from "../helper/ApiServiceConfig";
+import SegmentedButton from "sap/m/SegmentedButton";
+import Select from "sap/m/Select";
+import BaseController from "./Base.controller";
 
-export default class Cities extends Controller {
+export default class Cities extends BaseController {
     public formatter = formatter;
-    
-    private _currentSearch: CityDataParams = {};
-    private _currentSort: CityDataParams = {};
-    private _citiesService: CityService
 
     /**
      * Called when the controller is instantiated. Initializes the controller and fetches initial city data.
@@ -32,43 +30,15 @@ export default class Cities extends Controller {
         this.fetchCities();
     }
 
-    /**
-     * Fetches city data from the CityService and sets it to the model.
-     * Handles any errors that occur during fetching and displays a message toast.
-     */
-    private fetchCities(): void {
-        this._citiesService.getCities()
-            .then(cities => this.getModel('cities').setProperty("/data", cities))
-            .catch(() => MessageToast.show("Error initializing city data."));
-    }
-
-    /**
-     * Gets a JSONModel by its name.
-     * @param sName - The name of the model (optional).
-     * @returns The requested JSONModel instance.
-     */
-    private getModel(sName?: string): JSONModel {
-        return this.getView()?.getModel(sName) as JSONModel;
-    }
-
-    /**
-     * Updates city data based on the current search and sort criteria.
-     * Fetches filtered and sorted city data from the CityService and updates the model.
-     */
-    private updateCitiesData(): void {
-        const params = { ...this._currentSearch, ...this._currentSort };
-        this._citiesService.getCities(params)
-            .then(cities => this.getModel('cities').setProperty('/data', cities))
-            .catch(() => MessageToast.show("Error updating city data."));
-    }
-
-    /**
-     * Retrieves a Dialog control by its ID.
-     * @param dialogId - The ID of the dialog.
-     * @returns The Dialog control.
-     */
-    private getDialogById(dialogId: string): Dialog {
-        return this.byId(dialogId) as Dialog;
+    public onAfterRendering(): void {
+        this._filterPropertySelect = this.byId('filterProperty') as Select;
+        this._filterOperatorButton = this.byId('filterOperationSelect') as SegmentedButton;
+        this._filterValueInput = this.byId('filterValue') as Input
+        this.setupFilterOptions(this._filterPropertySelect.getSelectedKey());
+        this.updateCurrentSearch({
+            filterProperty: this._filterPropertySelect.getSelectedKey(), 
+            filterOperator: this._filterOperatorButton.getSelectedKey()
+        })
     }
 
     /**
@@ -96,22 +66,6 @@ export default class Cities extends Controller {
             .then(() => MessageToast.show('City Created Successfully.'))
             .catch(() => MessageToast.show('Error creating city.'));
         this.handleCloseCreateCityDialog();
-    }
-
-    /**
-     * Extracts city data from input fields in the dialog.
-     * @returns An object representing a city.
-     */
-    private getCityFromInputFields(): City {
-        const nameInput = this.byId('nameInput') as Input;
-        const areaInput = this.byId('areaInput') as Input;
-        const populationInput = this.byId('populationInput') as Input;
-
-        return {
-            name: nameInput.getValue(),
-            area: parseFloat(areaInput.getValue()),
-            population: parseInt(populationInput.getValue())
-        };
     }
 
     /**
@@ -143,24 +97,29 @@ export default class Cities extends Controller {
      */
     public handleSearch(oEvent: Event): void {
         const searchField = oEvent.getSource() as SearchField;
-        const nameChunk = searchField.getValue()
-        this._currentSearch = nameChunk ? 
-            { filterProperty: "name", filterOperator: ComparisonOperator.CONTAINS, filterValue: nameChunk } :
-            {};
-
+        const nameChunk = searchField.getValue();
+        this.updateCurrentSearch({ 
+            filterProperty: "name", 
+            filterOperator: ComparisonOperator.CONTAINS, 
+            filterValue: nameChunk 
+        });
         this.updateCitiesData();
-        this.updateSearchFilterProperty(nameChunk);
+        this.updateSearchFilterProperty(this._currentSearch.filterProperty, this._currentSearch.filterOperator, this._currentSearch.filterValue);
     }
 
-    /**
-     * Updates the search filter property in the model based on the current search query.
-     * @param nameChunk - The current search query string.
-     */
-    private updateSearchFilterProperty(nameChunk: string | undefined): void {
-        const filterText = nameChunk ? 
-            `Filter Applied: Property: 'name', Operator: contains, Value: ${nameChunk}` : 
-            "No Filter Applied";
+    public handleFilterPropertyChange(oEvent: Event): void {
+        const selectedProperty = this._filterPropertySelect.getSelectedKey()
+        this.setupFilterOptions(selectedProperty);
+        this.updateCurrentSearch({ filterProperty: selectedProperty });
+    }
 
-        this.getModel("cities").setProperty("/filter", filterText);
+    public handleFilterOperationSelect(oEvent: Event): void {
+        this.updateCurrentSearch({ filterOperator: this._filterOperatorButton.getSelectedKey() });
+    }
+
+    public handleApplyFilter(oEvent: Event): void {
+        this.updateCurrentSearch({filterValue: this._filterValueInput.getValue()});
+        this.updateSearchFilterProperty(this._currentSearch.filterProperty, this._currentSearch.filterOperator, this._currentSearch.filterValue)
+        this.updateCitiesData()
     }
 }

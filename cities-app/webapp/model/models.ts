@@ -22,7 +22,12 @@ export default {
      * @returns {JSONModel} A JSONModel instance for managing cities data.
      */
     createCitiesModel () {
-        const model = new JSONModel({data:[], filter:'No Filter Applied', sorter: 'No Sorter Applied'});
+        const model = new JSONModel(
+            {
+                data:[], 
+                filter:'No Filter Applied', 
+                sorter: 'No Sorter Applied'
+            });
         model.setDefaultBindingMode(BindingMode.TwoWay);
         model.setSizeLimit(Number.MAX_SAFE_INTEGER);
         return model;

@@ -1,5 +1,7 @@
+import { ComparisonOperator } from "../enums/ComparisonOperator";
+
 /**
- * Interface defining the parameters for updating city data.
+ * Interface defining the parameters for fetching city data.
  */
 export default interface CityDataParams {
     /**
