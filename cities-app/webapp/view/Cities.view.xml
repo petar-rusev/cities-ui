@@ -32,17 +32,14 @@
 					<core:Item key="name" text="City Name" />
 					<core:Item key="area" text="City Area" />
 					<core:Item key="population" text="City Population" />
-					<core:Item key="density" text="City Density" />
 				</Select>
 				<content>
 					<SegmentedButton id="filterOperationSelect" selectedKey="-" selectionChange="handleFilterOperationSelect">
 						<items>
 							<SegmentedButtonItem id="containsOperation" text="-" key="-" width="4em" tooltip="Contains"/>
 							<SegmentedButtonItem id="eqOperation" text="==" key=":" width="4em" tooltip="Equals"/>
-							<SegmentedButtonItem id="gtOperation" text="&gt;" key="gt" width="4em" tooltip="Greater Than"/>
-							<SegmentedButtonItem id="ltOperation" text="&lt;" key="lt" width="4em" tooltip="Less Than"/>
-							<SegmentedButtonItem id="lteOperation" text="&lt;=" key="lte" width="4em" tooltip = "Less Than Or Equals"/>
-							<SegmentedButtonItem id="gteOperation" text="&gt;=" key="gte" width="4em" tooltip="Greater Than Or Equals"/>
+							<SegmentedButtonItem id="gtOperation" text="&gt;" key="&gt;" width="4em" tooltip="Greater Than"/>
+							<SegmentedButtonItem id="ltOperation" text="&lt;" key="&lt;" width="4em" tooltip="Less Than"/>
 						</items>
 					</SegmentedButton>
 					<Input id="filterValue" type="Text" placeholder="Enter text" width="10em"/>
@@ -69,19 +66,19 @@
 						</ui:template>
 					</ui:Column>
 					<ui:Column>
-						<Label text="Area"/>
+						<Label text="Area - km2"/>
 						<ui:template>
 							<Text text="{cities>area}" wrapping="false"/>
 						</ui:template>
 					</ui:Column>
 					<ui:Column>
-						<Label text="Population"/>
+						<Label text="Population - people"/>
 						<ui:template>
 							<Text text="{cities>population}" wrapping="false"/>
 						</ui:template>
 					</ui:Column>
 					<ui:Column>
-						<Label text="Density"/>
+						<Label text="Density - people/km2 (rounded)"/>
 						<ui:template>
 							<Text text="{cities>density}" wrapping="false"/>
 						</ui:template>

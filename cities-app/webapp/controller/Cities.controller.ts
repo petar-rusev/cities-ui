@@ -1,15 +1,11 @@
 import Event from "sap/ui/base/Event";
-import JSONModel from "sap/ui/model/json/JSONModel";
 import MessageToast from "sap/m/MessageToast";
 import Input from "sap/m/Input";
-import Dialog from "sap/m/Dialog";
 
 import CityService from "../service/CityService";
-import CityDataParams from "../helper/CityDataParams";
 import formatter from "../formatter/formatter";
 import { ComparisonOperator } from "../enums/ComparisonOperator";
 import { SortOrder } from "../enums/SortOrder";
-import City from "../helper/City";
 import SearchField from "sap/m/SearchField";
 import { AppSettings } from "../util/AppSettings";
 import { ApiServiceConfig } from "../helper/ApiServiceConfig";

@@ -4,6 +4,10 @@ import CityService from "../service/CityService";
 import Select from "sap/m/Select";
 import SegmentedButton from "sap/m/SegmentedButton";
 import Input from "sap/m/Input";
+import MessageToast from "sap/m/MessageToast";
+import JSONModel from "sap/ui/model/json/JSONModel";
+import Dialog from "sap/m/Dialog";
+import City from "../helper/City";
 
 export default abstract class BaseController extends Controller {
 
@@ -136,7 +140,7 @@ export default abstract class BaseController extends Controller {
      */
     protected toggleFilterValueType(isStringFilter: boolean){
         const type = isStringFilter ? 'Text' : 'Number';
-        const placeholder = `Enter ${isStringFilter ? 'Text' : 'Number'}`;
+        const placeholder = `Enter ${isStringFilter ? 'Text' : 'Whole Number'}`;
         this._filterValueInput.setType(type);
         this._filterValueInput.setPlaceholder(placeholder);
     }
