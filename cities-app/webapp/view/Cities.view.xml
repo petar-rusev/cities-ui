@@ -78,7 +78,7 @@
 						</ui:template>
 					</ui:Column>
 					<ui:Column>
-						<Label text="Density - people/km2 (rounded)"/>
+						<Label text="Density - people/km2"/>
 						<ui:template>
 							<Text text="{cities>density}" wrapping="false"/>
 						</ui:template>
