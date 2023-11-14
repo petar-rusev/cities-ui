@@ -81,7 +81,7 @@ cd cities-app
 ```sh
 npm start
 ```
-This will spin up the cities-app on http://localhost:8080
+This will spin up the cities-app on http://localhost:8081
 
 
 
