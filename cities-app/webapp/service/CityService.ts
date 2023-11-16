@@ -1,6 +1,7 @@
 import { AppSettings } from "../util/AppSettings";
 import CityDataParams from "../helper/CityDataParams";
 import City from "../helper/City";
+import encodeURLParameters from "sap/base/security/encodeURLParameters";
 
 export default class CityService {
     private static instance: CityService;
@@ -46,8 +47,12 @@ export default class CityService {
      * @returns The generated URI.
      */
     private generateUri(params: CityDataParams): string {
-        const filterQuery = params.filterProperty && params.filterOperator && params.filterValue
-            ? `filter=${params.filterProperty}${params.filterOperator}${params.filterValue}`
+        const htmlEscapedFilterValue = this.encodeFilterChunk(params.filterValue);
+        const htmlEscapedFilterProperty = this.encodeFilterChunk(params.filterProperty);
+        const htmlEscapedFilterOperator = this.encodeFilterChunk(params.filterOperator);
+
+        const filterQuery = htmlEscapedFilterProperty && htmlEscapedFilterOperator && htmlEscapedFilterValue
+            ? `filter=${htmlEscapedFilterProperty}${htmlEscapedFilterOperator}${htmlEscapedFilterValue}`
             : '';
         const sortQuery = params.sortBy
             ? `sortBy=${params.sortBy}&order=${params.order || 'asc'}`
@@ -57,4 +62,12 @@ export default class CityService {
         const query = queryParts.join('&');
         return `${this.serviceUrl}?${query}`;
     }
+
+    private encodeFilterChunk(valueToEscape?:string) {
+        if (!valueToEscape) {
+            return '';
+        }
+        return encodeURIComponent(valueToEscape.trim());
+    }
+    
 }
