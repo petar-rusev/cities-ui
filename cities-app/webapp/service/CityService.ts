@@ -47,9 +47,9 @@ export default class CityService {
      * @returns The generated URI.
      */
     private generateUri(params: CityDataParams): string {
-        const htmlEscapedFilterValue = this.encodeFilterChunk(params.filterValue);
-        const htmlEscapedFilterProperty = this.encodeFilterChunk(params.filterProperty);
-        const htmlEscapedFilterOperator = this.encodeFilterChunk(params.filterOperator);
+        const htmlEscapedFilterValue = this.processFilterChunk(params.filterValue);
+        const htmlEscapedFilterProperty = this.processFilterChunk(params.filterProperty);
+        const htmlEscapedFilterOperator = this.processFilterChunk(params.filterOperator);
 
         const filterQuery = htmlEscapedFilterProperty && htmlEscapedFilterOperator && htmlEscapedFilterValue
             ? `filter=${htmlEscapedFilterProperty}${htmlEscapedFilterOperator}${htmlEscapedFilterValue}`
@@ -63,11 +63,22 @@ export default class CityService {
         return `${this.serviceUrl}?${query}`;
     }
 
-    private encodeFilterChunk(valueToEscape?:string) {
+        /**
+     * Processes and encodes a filter chunk for use in query parameters.
+     * Trims the input string, replaces all spaces with the pipe ('|') character, 
+     * and then applies URI component encoding.
+     *
+     * @param {string} [valueToEscape] - The string value to be processed and encoded. Optional.
+     * @returns {string} The processed and encoded string. Returns an empty string if the input is falsy.
+     * @private
+     */
+    private processFilterChunk(valueToEscape?: string): string {
         if (!valueToEscape) {
             return '';
         }
-        return encodeURIComponent(valueToEscape.trim());
+        valueToEscape = valueToEscape.trim();
+        valueToEscape = valueToEscape.replaceAll(' ', '|');
+        return encodeURIComponent(valueToEscape);
     }
-    
+
 }
